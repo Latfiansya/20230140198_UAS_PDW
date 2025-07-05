@@ -1,0 +1,62 @@
+
+-- Tabel Users (sudah ada)
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('mahasiswa', 'asisten') NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabel Mata Praktikum
+CREATE TABLE IF NOT EXISTS mata_praktikum (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama VARCHAR(100) NOT NULL,
+  deskripsi TEXT,
+  semester VARCHAR(20),
+  tahun_ajaran VARCHAR(20)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabel Pendaftaran Praktikum
+CREATE TABLE IF NOT EXISTS pendaftaran (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  praktikum_id INT NOT NULL,
+  tanggal_daftar DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (praktikum_id) REFERENCES mata_praktikum(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabel Modul
+CREATE TABLE IF NOT EXISTS modul (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  praktikum_id INT NOT NULL,
+  judul VARCHAR(100) NOT NULL,
+  deskripsi TEXT,
+  file_materi VARCHAR(255),
+  pertemuan_ke INT,
+  tanggal_upload DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (praktikum_id) REFERENCES mata_praktikum(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabel Laporan
+CREATE TABLE IF NOT EXISTS laporan (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  modul_id INT NOT NULL,
+  file_laporan VARCHAR(255),
+  waktu_kumpul DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (modul_id) REFERENCES modul(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabel Penilaian
+CREATE TABLE IF NOT EXISTS penilaian (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  laporan_id INT NOT NULL,
+  nilai DECIMAL(5,2),
+  feedback TEXT,
+  waktu_nilai DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (laporan_id) REFERENCES laporan(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
