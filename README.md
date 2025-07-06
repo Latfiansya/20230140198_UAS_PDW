@@ -58,6 +58,6 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 | :---: | :---: | :---: |
 | ![Dashboard Mahasiswa](screenshots/dashboard-mahasiswa.png) | ![Katalog Praktikum](screenshots/katalog-praktikum.png) | ![Praktikum Saya](screenshots/praktikum-saya.png) |
 
-| Detail Praktikum & Tugas |
+| Detail Praktikum & Tugas | Detail Praktikum & Tugas (+status pengumpulan) |
 | :---: | :---: |
 | ![Detail Praktikum & Tugas](screenshots/detail-tugas1.png) | ![Detail Praktikum & Tugas](screenshots/detail-tugas2.png) |
