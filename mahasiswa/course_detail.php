@@ -67,61 +67,92 @@ $modules = mysqli_stmt_get_result($stmt_modules);
 
 ?>
 
-<div class="container mx-auto">
-    <a href="my_courses.php" class="text-blue-600 hover:underline mb-4 inline-block">&larr; Kembali ke Praktikum Saya</a>
-    <h1 class="text-3xl font-bold text-gray-800 mb-6"><?php echo htmlspecialchars($course['nama']); ?></h1>
-    
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+    <a href="my_courses.php"
+        class="inline-flex items-center mb-6 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition duration-200">
+        &larr; Kembali ke Praktikum Saya
+    </a>
+
+    <h1 class="text-3xl font-extrabold text-gray-800 mb-6"><?php echo htmlspecialchars($course['nama']); ?></h1>
+
     <div class="space-y-6">
         <?php while($modul = mysqli_fetch_assoc($modules)): ?>
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h3 class="text-xl font-bold text-gray-800">Pertemuan <?php echo $modul['pertemuan_ke']; ?>: <?php echo htmlspecialchars($modul['judul']); ?></h3>
-            <p class="text-gray-600 mt-1 mb-4"><?php echo htmlspecialchars($modul['deskripsi']); ?></p>
-            
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-emerald-700 mb-2">
+                Pertemuan <?php echo $modul['pertemuan_ke']; ?>: <?php echo htmlspecialchars($modul['judul']); ?>
+            </h3>
+            <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($modul['deskripsi']); ?></p>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div>
-                    <?php if(!empty($modul['file_materi'])): ?>
-                    <a href="../uploads/materi/<?php echo htmlspecialchars($modul['file_materi']); ?>" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 mb-4">
-                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                        Unduh Materi
-                    </a>
+                    <?php if (!empty($modul['file_materi'])): ?>
+                        <a href="../uploads/materi/<?php echo htmlspecialchars($modul['file_materi']); ?>"
+                            target="_blank"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 mb-4 transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                            Unduh Materi
+                        </a>
                     <?php endif; ?>
 
-                    <?php if($modul['laporan_id'] && $modul['nilai'] !== null): ?>
-                    <div class="mt-4 border-t pt-4">
-                        <h4 class="font-semibold text-gray-700">Penilaian Laporan Anda:</h4>
-                        <p class="text-4xl font-bold text-green-600"><?php echo htmlspecialchars($modul['nilai']); ?></p>
-                        <p class="font-semibold mt-2">Feedback dari Asisten:</p>
-                        <blockquote class="border-l-4 border-gray-200 pl-4 italic text-gray-600">
-                            <?php echo !empty($modul['feedback']) ? nl2br(htmlspecialchars($modul['feedback'])) : 'Tidak ada feedback.'; ?>
-                        </blockquote>
-                    </div>
+                    <?php if ($modul['laporan_id'] && $modul['nilai'] !== null): ?>
+                        <div class="mt-4 border-t pt-4">
+                            <h4 class="font-semibold text-gray-700">Penilaian Laporan Anda:</h4>
+                            <p class="text-4xl font-bold text-green-600"><?php echo htmlspecialchars($modul['nilai']); ?></p>
+                            <p class="font-semibold mt-2">Feedback dari Asisten:</p>
+                            <blockquote class="border-l-4 border-emerald-300 pl-4 italic text-gray-600">
+                                <?php echo !empty($modul['feedback']) ? nl2br(htmlspecialchars($modul['feedback'])) : 'Tidak ada feedback.'; ?>
+                            </blockquote>
+                        </div>
                     <?php endif; ?>
                 </div>
 
-                <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="bg-gray-50 p-4 rounded-lg border">
                     <h4 class="font-semibold text-gray-700 mb-2">Laporan Praktikum</h4>
+
                     <?php if ($modul['laporan_id']): ?>
-                        <div class="text-sm">
+                        <div class="text-sm space-y-1">
                             <p class="font-semibold text-green-700">Anda sudah mengumpulkan laporan.</p>
-                            <p><strong>File:</strong> <a href="../uploads/laporan/<?php echo htmlspecialchars($modul['file_laporan']); ?>" class="text-blue-600 hover:underline"><?php echo htmlspecialchars($modul['file_laporan']); ?></a></p>
-                            <p><strong>Waktu:</strong> <?php echo date('d M Y, H:i', strtotime($modul['waktu_kumpul'])); ?></p>
+                            <p><strong>File:</strong>
+                                <a href="../uploads/laporan/<?php echo htmlspecialchars($modul['file_laporan']); ?>"
+                                    class="text-emerald-600 hover:underline">
+                                    <?php echo htmlspecialchars($modul['file_laporan']); ?>
+                                </a>
+                            </p>
+                            <p><strong>Waktu:</strong>
+                                <?php echo date('d M Y, H:i', strtotime($modul['waktu_kumpul'])); ?>
+                            </p>
+
                             <?php if ($modul['nilai'] === null): ?>
-                            <p class="mt-2 text-yellow-800 bg-yellow-100 px-2 py-1 rounded-md inline-block">Status: Menunggu Penilaian</p>
+                                <p class="mt-2 text-yellow-800 bg-yellow-100 px-3 py-1 rounded-md inline-block text-sm font-medium">
+                                    Status: Menunggu Penilaian
+                                </p>
                             <?php endif; ?>
                         </div>
                     <?php else: ?>
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data" class="space-y-3">
                             <input type="hidden" name="modul_id" value="<?php echo $modul['id']; ?>">
-                            <input type="file" name="file_laporan" required class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-3">
-                            <button type="submit" name="submit_laporan" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Kumpulkan Laporan</button>
+
+                            <input type="file" name="file_laporan" required
+                                    class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0 file:text-sm file:font-semibold
+                                    file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+
+                            <button type="submit" name="submit_laporan"
+                                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                                Kumpulkan Laporan
+                            </button>
                         </form>
                     <?php endif; ?>
                 </div>
-
             </div>
         </div>
         <?php endwhile; ?>
     </div>
 </div>
+
 
 <?php require_once 'templates/footer_mahasiswa.php'; ?>

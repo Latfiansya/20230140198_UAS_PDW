@@ -1,67 +1,80 @@
 <?php
 // File: mahasiswa/courses.php
 
-$pageTitle = 'Cari Praktikum';
-$activePage = 'courses';
-require_once 'templates/header_mahasiswa.php';
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../login.php");
+    exit();
+}
+
 require_once '../config.php';
 
+$pageTitle = 'Cari Praktikum';
+$activePage = 'courses';
 $user_id = $_SESSION['user_id'];
 
-// Ambil semua mata praktikum dan cek status pendaftaran user saat ini
-$sql = "SELECT mp.*, p.id AS id_pendaftaran
-        FROM mata_praktikum mp
-        LEFT JOIN pendaftaran p ON mp.id = p.praktikum_id AND p.user_id = ?
-        ORDER BY mp.nama";
+// Ambil semua praktikum beserta info apakah user sudah mendaftar
+$query = "
+    SELECT mp.id, mp.nama, mp.deskripsi, mp.semester, mp.tahun_ajaran,
+           (SELECT COUNT(*) FROM pendaftaran WHERE user_id = ? AND praktikum_id = mp.id) AS sudah_daftar
+    FROM mata_praktikum mp
+    ORDER BY mp.tahun_ajaran DESC, mp.semester DESC
+";
 
-$stmt = mysqli_prepare($conn, $sql);
+$stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "i", $user_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
+
+require_once 'templates/header_mahasiswa.php';
 ?>
 
-<div class="container mx-auto">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Katalog Mata Praktikum</h1>
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Daftar Mata Praktikum</h1>
 
-    <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-            <p class="font-bold">Berhasil!</p>
-            <p>Anda telah terdaftar pada mata praktikum. Lihat di <a href="my_courses.php" class="underline font-semibold">Praktikum Saya</a>.</p>
+    <?php if (mysqli_num_rows($result) === 0): ?>
+        <div class="bg-white p-6 rounded-lg shadow text-gray-600">
+            Tidak ada mata praktikum tersedia saat ini.
         </div>
-    <?php elseif (isset($_GET['status']) && $_GET['status'] == 'exists'): ?>
-         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
-            <p class="font-bold">Informasi</p>
-            <p>Anda sudah terdaftar pada mata praktikum tersebut.</p>
-        </div>
-    <?php endif; ?>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <?php if (mysqli_num_rows($result) > 0): ?>
-            <?php while($row = mysqli_fetch_assoc($result)): ?>
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col">
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-bold text-gray-900"><?php echo htmlspecialchars($row['nama']); ?></h3>
-                        <p class="mt-2 text-gray-600 text-sm">
-                            <?php echo nl2br(htmlspecialchars($row['deskripsi'])); ?>
+    <?php else: ?>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex flex-col justify-between min-h-[270px]">
+                    <div>
+                        <h2 class="text-xl font-bold text-emerald-700 mb-2">
+                            <?= htmlspecialchars($row['nama']); ?>
+                        </h2>
+                        <p class="text-sm text-gray-600 mb-4">
+                            <?= htmlspecialchars($row['deskripsi']); ?>
                         </p>
                     </div>
-                    <div class="bg-gray-50 p-4">
-                        <?php if ($row['id_pendaftaran']): ?>
-                            <button class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-md cursor-not-allowed" disabled>
+
+                    <div class="mt-auto pt-4 border-t">
+                        <p class="text-sm text-gray-500 mb-1">
+                            Semester: <span class="font-semibold"><?= htmlspecialchars($row['semester']); ?></span>
+                        </p>
+                        <p class="text-sm text-gray-500 mb-4">
+                            Tahun Ajaran: <span class="font-semibold"><?= htmlspecialchars($row['tahun_ajaran']); ?></span>
+                        </p>
+
+                        <?php if ($row['sudah_daftar'] > 0): ?>
+                            <button class="w-full bg-gray-300 text-gray-600 font-semibold text-sm px-4 py-2 rounded-lg cursor-not-allowed" disabled>
                                 Sudah Terdaftar
                             </button>
                         <?php else: ?>
-                            <a href="daftar_praktikum.php?id=<?php echo $row['id']; ?>" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors">
-                                Daftar Sekarang
-                            </a>
+                            <form method="POST" action="daftar.php">
+                                <input type="hidden" name="praktikum_id" value="<?= $row['id']; ?>">
+                                <button type="submit"
+                                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition duration-200">
+                                    Daftar Praktikum
+                                </button>
+                            </form>
                         <?php endif; ?>
                     </div>
                 </div>
             <?php endwhile; ?>
-        <?php else: ?>
-            <p class="text-gray-500 col-span-3">Saat ini belum ada mata praktikum yang tersedia.</p>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 <?php require_once 'templates/footer_mahasiswa.php'; ?>
