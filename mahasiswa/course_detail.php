@@ -1,11 +1,15 @@
 <?php
-// File: mahasiswa/course_detail.php
+// Mulai dari sini
+require_once '../config.php';
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../login.php");
+    exit();
+}
 
 $pageTitle = 'Detail Praktikum';
 $activePage = 'my_courses';
-require_once 'templates/header_mahasiswa.php';
-require_once '../config.php';
-
 $user_id = $_SESSION['user_id'];
 
 // Validasi ID praktikum dari URL
@@ -15,25 +19,15 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $praktikum_id = intval($_GET['id']);
 
-// Keamanan: Cek apakah mahasiswa terdaftar di praktikum ini
-$stmt_check = mysqli_prepare($conn, "SELECT id FROM pendaftaran WHERE user_id = ? AND praktikum_id = ?");
-mysqli_stmt_bind_param($stmt_check, "ii", $user_id, $praktikum_id);
-mysqli_stmt_execute($stmt_check);
-if (mysqli_stmt_get_result($stmt_check)->num_rows == 0) {
-    header("Location: my_courses.php"); // Jika tidak terdaftar, tendang kembali
-    exit();
-}
-
-// Proses upload laporan
+// Proses upload laporan (pindahkan ini juga ke atas)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_laporan'])) {
     $modul_id = intval($_POST['modul_id']);
-    
+
     if (isset($_FILES['file_laporan']) && $_FILES['file_laporan']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = '../uploads/laporan/';
         $file_name = $user_id . '_' . $modul_id . '_' . time() . '_' . basename($_FILES['file_laporan']['name']);
         $target_file = $upload_dir . $file_name;
 
-        // Cek apakah sudah pernah upload, jika ya, ini jadi update (opsional, untuk sekarang kita anggap insert saja)
         if (move_uploaded_file($_FILES['file_laporan']['tmp_name'], $target_file)) {
             $stmt_insert = mysqli_prepare($conn, "INSERT INTO laporan (user_id, modul_id, file_laporan) VALUES (?, ?, ?)");
             mysqli_stmt_bind_param($stmt_insert, "iis", $user_id, $modul_id, $file_name);
@@ -43,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_laporan'])) {
         }
     }
 }
+
+// Setelah semua `header()` selesai, baru panggil header HTML
+require_once 'templates/header_mahasiswa.php';
+
 
 
 // Ambil detail mata praktikum
