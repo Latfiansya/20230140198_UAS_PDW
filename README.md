@@ -43,7 +43,7 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 <br>
 
 ### Halaman Asisten (Admin)
-| Dashboard | Manajemen Modul | Detail Modul |
+| Dashboard |
 | :---: |
 | ![Dashboard Asisten](screenshots/dashboard-asisten.png) |
 
