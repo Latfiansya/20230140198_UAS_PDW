@@ -44,12 +44,23 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 
 ### Halaman Asisten (Admin)
 | Dashboard | Manajemen Modul | Detail Modul |
-| :---: | :---: | :---: |
-| ![Dashboard Asisten](screenshots/dashboard-asisten.png) | ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/detail-modul.png) |
+| :---: |
+| ![Dashboard Asisten](screenshots/dashboard-asisten.png) |
 
-| Laporan Masuk | Detail & Penilaian Laporan | Manajemen Akun |
-| :---: | :---: | :---: |
-| ![Laporan Masuk](screenshots/laporan-masuk.png) | ![Penilaian Laporan](screenshots/penilaian-laporan.png) | ![Manajemen Akun](screenshots/manajemen-akun.png) |
+| Manajemen Praktikum | Detail Praktikum |
+| :---: | :---: |
+| ![Manajemen Praktikum](screenshots/Manajemen-Praktikum.png) | ![Detail Praktikum](screenshots/Detail-Praktikum.png) |
+
+| Manajemen Modul | Detail Modul |
+| :---: | :---: |
+| ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/detail-modul.png) |
+
+| Laporan Masuk | Detail & Penilaian Laporan |
+| ![Laporan Masuk](screenshots/laporan-masuk.png) | ![Penilaian Laporan](screenshots/penilaian-laporan.png) |
+
+| Manajemen Akun | Edit Akun |
+| :---: | :---: | 
+| ![Manajemen Akun](screenshots/manajemen-akun.png) | ![Edit Akun](screenshots/edit-akun.png) |
 
 <br>
 
