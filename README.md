@@ -56,6 +56,7 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 | ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/detail-modul.png) |
 
 | Laporan Masuk | Detail & Penilaian Laporan |
+| :---: | :---: |
 | ![Laporan Masuk](screenshots/laporan-masuk.png) | ![Penilaian Laporan](screenshots/penilaian-laporan.png) |
 
 | Manajemen Akun | Edit Akun |
