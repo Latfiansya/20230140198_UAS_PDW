@@ -52,6 +52,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'asisten') {
                         <span>Laporan Masuk</span>
                     </a>
                 </li>
+                <li>
+                    <a href="akun.php" class="<?php echo ($activePage == 'akun') ? $activeClass : $inactiveClass; ?> flex items-center px-4 py-3 rounded-md transition-colors duration-200">
+                        <svg class="w-5 h-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-2.305c.395-.429.744-1.24.962-2.093a9.303 9.303 0 00-1.642-3.723c.252-.253.488-.528.688-.822a9.303 9.303 0 00-1.642-3.723c-.252.253-.488.528-.688.822a9.345 9.345 0 00-4.121-2.305 9.38 9.38 0 00-2.625.372M15 19.128v-2.828M15 19.128l-3.128-3.128M15 5.872v2.828M15 5.872l-3.128 3.128" /></svg>
+                        <span>Manajemen Akun</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
