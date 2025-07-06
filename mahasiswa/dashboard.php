@@ -41,9 +41,9 @@ $tugas_menunggu = max(0, $tugas_menunggu);
 
 // 5. Mengambil notifikasi: nilai terbaru yang diberikan
 $query_notif_nilai = "SELECT m.judul AS judul_modul FROM penilaian p
-                      JOIN laporan l ON p.laporan_id = l.id
-                      JOIN modul m ON l.modul_id = m.id
-                      WHERE l.user_id = ? ORDER BY p.waktu_nilai DESC LIMIT 1";
+                        JOIN laporan l ON p.laporan_id = l.id
+                        JOIN modul m ON l.modul_id = m.id
+                        WHERE l.user_id = ? ORDER BY p.waktu_nilai DESC LIMIT 1";
 $stmt_notif_nilai = mysqli_prepare($conn, $query_notif_nilai);
 mysqli_stmt_bind_param($stmt_notif_nilai, "i", $user_id);
 mysqli_stmt_execute($stmt_notif_nilai);
@@ -51,57 +51,100 @@ $notif_nilai = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_notif_nilai));
 ?>
 
 
-<div class="bg-gradient-to-r from-blue-500 to-cyan-400 text-white p-8 rounded-xl shadow-lg mb-8">
-    <h1 class="text-3xl font-bold">Selamat Datang Kembali, <?php echo htmlspecialchars($_SESSION['nama']); ?>!</h1>
-    <p class="mt-2 opacity-90">Terus semangat dalam menyelesaikan semua modul praktikummu.</p>
-</div>
+<div class="space-y-8">
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-8 rounded-2xl shadow-lg">
+        <h1 class="text-4xl font-bold">Selamat Datang Kembali, <?php echo htmlspecialchars($_SESSION['nama']); ?>!</h1>
+        <p class="mt-2 text-lg opacity-90">Terus semangat dalam menyelesaikan semua modul praktikummu.</p>
+    </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
-        <div class="text-5xl font-extrabold text-blue-600"><?php echo $count_praktikum_diikuti; ?></div>
-        <div class="mt-2 text-lg text-gray-600">Praktikum Diikuti</div>
-    </div>
-    
-    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
-        <div class="text-5xl font-extrabold text-green-500"><?php echo $count_tugas_selesai; ?></div>
-        <div class="mt-2 text-lg text-gray-600">Tugas Selesai</div>
-    </div>
-    
-    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center justify-center">
-        <div class="text-5xl font-extrabold text-yellow-500"><?php echo $tugas_menunggu; ?></div>
-        <div class="mt-2 text-lg text-gray-600">Tugas Menunggu</div>
-    </div>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow-md">
-    <h3 class="text-2xl font-bold text-gray-800 mb-4">Notifikasi Terbaru</h3>
-    <ul class="space-y-4">
-        
-        <?php if ($notif_nilai): ?>
-        <li class="flex items-start p-3 border-b border-gray-100 last:border-b-0">
-            <span class="text-xl mr-4">🔔</span>
-            <div>
-                Nilai untuk <strong class="font-semibold text-blue-600"><?php echo htmlspecialchars($notif_nilai['judul_modul']); ?></strong> telah diberikan. Silakan cek di detail praktikum terkait.
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 flex items-center space-x-5 transition-transform transform hover:-translate-y-1.5 duration-300">
+            <div class="bg-sky-100 text-sky-600 p-4 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
             </div>
-        </li>
-        <?php endif; ?>
-
-        <li class="flex items-start p-3">
-            <span class="text-xl mr-4">✅</span>
             <div>
-                Selamat datang di SIMPRAK. Anda bisa mulai mencari praktikum yang tersedia di menu <a href="courses.php" class="font-semibold text-blue-600 hover:underline">Cari Praktikum</a>.
+                <p class="text-slate-500 text-sm font-medium">Praktikum Diikuti</p>
+                <p class="text-3xl font-bold text-slate-800"><?php echo $count_praktikum_diikuti; ?></p>
             </div>
-        </li>
+        </div>
         
-        <?php if (!$notif_nilai): ?>
-             <li class="flex items-start p-3 border-t border-gray-100">
-                <span class="text-xl mr-4">💡</span>
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 flex items-center space-x-5 transition-transform transform hover:-translate-y-1.5 duration-300">
+            <div class="bg-green-100 text-green-600 p-4 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-slate-500 text-sm font-medium">Tugas Selesai</p>
+                <p class="text-3xl font-bold text-slate-800"><?php echo $count_tugas_selesai; ?></p>
+            </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 flex items-center space-x-5 transition-transform transform hover:-translate-y-1.5 duration-300">
+             <div class="bg-amber-100 text-amber-600 p-4 rounded-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-slate-500 text-sm font-medium">Tugas Menunggu</p>
+                <p class="text-3xl font-bold text-slate-800"><?php echo $tugas_menunggu; ?></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+        <h3 class="text-xl font-bold text-slate-800 mb-5">Notifikasi Terbaru</h3>
+        <ul class="space-y-4">
+            
+            <?php if ($notif_nilai): ?>
+            <li class="flex items-start space-x-4 p-4 rounded-lg hover:bg-slate-50 transition-colors">
+                <div class="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full h-10 w-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </div>
                 <div>
-                    Belum ada notifikasi baru untuk Anda.
+                    <p class="text-slate-700">
+                        Nilai untuk <strong class="font-semibold text-emerald-700"><?php echo htmlspecialchars($notif_nilai['judul_modul']); ?></strong> telah diberikan. Silakan cek di detail praktikum terkait.
+                    </p>
+                    <span class="text-xs text-slate-400">Baru saja</span>
                 </div>
             </li>
-        <?php endif; ?>
-    </ul>
+            <?php endif; ?>
+
+            <li class="flex items-start space-x-4 p-4 rounded-lg hover:bg-slate-50 transition-colors <?php if($notif_nilai) echo 'border-t border-slate-100'; ?>">
+                <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full h-10 w-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-slate-700">
+                        Selamat datang di SIMPRAK. Anda bisa mulai mencari praktikum yang tersedia di menu <a href="courses.php" class="font-semibold text-emerald-600 hover:underline">Cari Praktikum</a>.
+                    </p>
+                    <span class="text-xs text-slate-400">1 hari yang lalu</span>
+                </div>
+            </li>
+            
+            <?php if (!$notif_nilai): ?>
+            <li class="flex items-start space-x-4 p-4 rounded-lg hover:bg-slate-50 transition-colors border-t border-slate-100">
+                <div class="flex-shrink-0 bg-slate-100 text-slate-500 rounded-full h-10 w-10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-slate-500">
+                        Belum ada notifikasi baru untuk Anda.
+                    </p>
+                </div>
+            </li>
+            <?php endif; ?>
+        </ul>
+    </div>
 </div>
 
 <?php
