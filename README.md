@@ -22,7 +22,7 @@ Aplikasi ini memiliki dua peran utama dengan fungsionalitas masing-masing:
     * CRUD penuh untuk data Akun Pengguna (Mahasiswa & Asisten).
     * Melihat dan memfilter laporan yang masuk dari mahasiswa.
     * Memberikan nilai dan feedback untuk setiap laporan.
-    * Dashboard dinamis yang menampilkan statistik.
+    * Dashboard dinamis yang menampilkan aktivitas terbaru.
 
 2.  **Mahasiswa:**
     * Melihat katalog dan mendaftar ke mata praktikum.
