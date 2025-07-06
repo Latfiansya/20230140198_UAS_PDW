@@ -79,19 +79,19 @@ require_once 'templates/header.php';
 ?>
 
 <div class="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Formulir Edit Akun</h2>
+    <h2 class="text-2xl font-bold text-emerald-700 mb-6">Formulir Edit Akun</h2>
 
     <?php if ($success_message): ?>
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
-            <p class="font-bold">Berhasil!</p>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <p class="font-semibold">Berhasil!</p>
             <p><?php echo $success_message; ?> <a href="akun.php" class="underline">Kembali ke daftar akun</a>.</p>
         </div>
     <?php endif; ?>
 
     <?php if (!empty($errors)): ?>
-         <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
-            <p class="font-bold">Terjadi Kesalahan</p>
-            <ul class="list-disc pl-5 mt-2">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <p class="font-semibold">Terjadi Kesalahan:</p>
+            <ul class="list-disc pl-5 mt-2 text-sm">
                 <?php foreach ($errors as $error): ?>
                     <li><?php echo htmlspecialchars($error); ?></li>
                 <?php endforeach; ?>
@@ -99,31 +99,48 @@ require_once 'templates/header.php';
         </div>
     <?php endif; ?>
 
-    <form method="POST" class="space-y-6">
+    <form method="POST" class="space-y-5">
         <div>
             <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-            <input type="text" name="nama" id="nama" value="<?php echo htmlspecialchars($user['nama']); ?>" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+            <input type="text" name="nama" id="nama"
+                    value="<?php echo htmlspecialchars($user['nama']); ?>"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                    required>
         </div>
+
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+            <input type="email" name="email" id="email"
+                    value="<?php echo htmlspecialchars($user['email']); ?>"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                    required>
         </div>
+
         <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password Baru</label>
-            <input type="password" name="password" id="password" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Kosongkan jika tidak ingin diubah">
+            <input type="password" name="password" id="password"
+                    placeholder="Kosongkan jika tidak ingin diubah"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
         </div>
+
         <div>
             <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-            <select id="role" name="role" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md" required>
+            <select id="role" name="role"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                    required>
                 <option value="mahasiswa" <?php echo ($user['role'] == 'mahasiswa') ? 'selected' : ''; ?>>Mahasiswa</option>
                 <option value="asisten" <?php echo ($user['role'] == 'asisten') ? 'selected' : ''; ?>>Asisten</option>
             </select>
         </div>
-        <div class="flex justify-end pt-4">
-            <a href="akun.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-md mr-2">Batal</a>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Simpan Perubahan</button>
+
+        <div class="flex justify-end pt-4 space-x-2">
+            <a href="akun.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-md">Batal</a>
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-md">
+                Simpan Perubahan
+            </button>
         </div>
     </form>
 </div>
+
 
 <?php require_once 'templates/footer.php'; ?>

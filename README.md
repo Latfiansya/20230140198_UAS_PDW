@@ -47,13 +47,13 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 | :---: |
 | ![Dashboard Asisten](screenshots/dashboard-asisten.png) |
 
-| Manajemen Praktikum | Detail Praktikum |
-| :---: | :---: |
-| ![Manajemen Praktikum](screenshots/Manajemen-Praktikum.png) | ![Detail Praktikum](screenshots/Detail-Praktikum.png) |
+| Manajemen Praktikum | Tambah Praktikum | Edit Praktikum |
+| :---: | :---: | :---: |
+| ![Manajemen Praktikum](screenshots/Manajemen-Praktikum.png) | ![Tambah Praktikum](screenshots/Tambah-Praktikum.png) | ![Edit Praktikum](screenshots/Edit-Praktikum.png) |
 
-| Manajemen Modul | Detail Modul |
+| Manajemen Modul | Tambah Modul |
 | :---: | :---: |
-| ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/detail-modul.png) |
+| ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/Tambah-modul.png) |
 
 | Laporan Masuk | Detail & Penilaian Laporan |
 | :---: | :---: |
