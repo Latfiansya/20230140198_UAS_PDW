@@ -43,9 +43,9 @@ Berikut adalah beberapa tangkapan layar dari tampilan aplikasi SIMPRAK.
 <br>
 
 ### Halaman Asisten (Admin)
-| Dashboard | Manajemen Praktikum | Manajemen Modul |
+| Dashboard | Manajemen Modul | Detail Modul |
 | :---: | :---: | :---: |
-| ![Dashboard Asisten](screenshots/dashboard-asisten.png) | ![Manajemen Praktikum](screenshots/manajemen-praktikum.png) | ![Manajemen Modul](screenshots/manajemen-modul.png) |
+| ![Dashboard Asisten](screenshots/dashboard-asisten.png) | ![Manajemen Modul](screenshots/manajemen-modul.png) | ![Detail Modul](screenshots/detail-modul.png) |
 
 | Laporan Masuk | Detail & Penilaian Laporan | Manajemen Akun |
 | :---: | :---: | :---: |
